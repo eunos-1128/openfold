@@ -48,7 +48,7 @@ def get_cuda_bare_metal_version(cuda_dir):
         release = output[release_idx].split(".")
         bare_metal_major = release[0]
         bare_metal_minor = release[1][0]
-        
+
         return raw_output, bare_metal_major, bare_metal_minor
 
 compute_capabilities = set([
@@ -117,7 +117,12 @@ setup(
     author_email='gahdritz@gmail.com',
     license='Apache License, Version 2.0',
     url='https://github.com/aqlaboratory/openfold',
-    packages=find_packages(exclude=["tests", "scripts"]),
+    packages=[
+        *find_packages(exclude=["tests", "scripts"]),
+
+        # 明示的に`openfold.utils.kernel.csrc`を追加
+        "openfold.utils.kernel.csrc"
+    ],
     include_package_data=True,
     package_data={
         "openfold": ['utils/kernel/csrc/*'],
